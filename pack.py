@@ -1,4 +1,5 @@
 from zipfile import ZipFile
+import shutil
 import os
 
 pack_version = "1.4.0"
@@ -7,6 +8,9 @@ pack_name = " Ancient Debris"
 file_path = "./assets/minecraft/textures/block/ancient_debris_"
 colors_amount = 0
 is_animated = False
+
+os.mkdir("./expo")
+os.mkdir("./expo/rainbow")
 
 for color in os.listdir("./colors"):
     if color.endswith("Rainbow"):
@@ -27,5 +31,8 @@ for color in os.listdir("./colors"):
     colors_amount += 1
     is_animated = False
 
+for zip in os.listdir("./expo"):
+    if color.endswith("Rainbow"+pack_name+" "+pack_version+".zip"):
+        shutil.move(zip, "./expo/rainbow")
 
 print(colors_amount)

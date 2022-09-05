@@ -1,4 +1,4 @@
-# Colored-Debris
+# Colored Ancient Debris
 
 ## WARNING THE FLASHING VERSION OF ANIMATED TEXTURES HAS FLASHING COLORS
 

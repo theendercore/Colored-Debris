@@ -20,3 +20,5 @@ All the current colors:
  
 
 If you want any more colors / variations please do comment down below I will happily add them!
+
+[![ko-fi](https://ko-fi.com/img/githubbutton_sm.svg)](https://ko-fi.com/M4M7DWJCH)

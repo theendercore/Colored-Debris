@@ -2,7 +2,7 @@ from zipfile import ZipFile
 import shutil
 import os
 
-pack_version = "1.4.0"
+pack_version = "1.3.0"
 mcmeta = "./pack.mcmeta"
 pack_name = " Ancient Debris"
 file_path = "./assets/minecraft/textures/block/ancient_debris_"

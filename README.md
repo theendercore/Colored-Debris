@@ -16,6 +16,11 @@ All the current colors:
  - Violet
  - Yellow
  - Original Green
+ - Boneish
+ - Dark Magenta
+ - Faded White
+ - Grayish Blue
+ - Monochrome
  - Rainbow (Animated) [Flashing, Normal and Slow speeds of animation]
  
 

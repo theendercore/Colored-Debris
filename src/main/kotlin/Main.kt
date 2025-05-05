@@ -19,6 +19,9 @@ val JSON = Json { prettyPrint = true }
 val COLORS = File("colors")
 val EXPORT = File("./expo")
 
+const val MAIN = "OriginalGreen"
+const val RAINBOW = "Rainbow"
+
 val PACKS = mutableMapOf<String, File>()
 
 fun main() {
@@ -35,7 +38,33 @@ fun main() {
         COLORS.listFiles()?.forEach { processColorDir(it, packMeta) }
     }
     // Upload packs
+    val sortedFiles = sortFiles()
+}
 
+fun sortFiles(): List<Pair<File, MutableSet<File>>> {
+    var main: File? = null
+    val mainAdditional = mutableSetOf<File>()
+    var rainbow: File? = null
+    val rainbowAdditional = mutableSetOf<File>()
+
+    for ((name, file) in PACKS) {
+        if (name.contains(RAINBOW)) {
+            if (name == RAINBOW) rainbow = file
+            else rainbowAdditional.add(file)
+            continue
+        }
+        if (name == MAIN) {
+            main = file
+            continue
+        }
+        mainAdditional.add(file)
+
+    }
+
+    require(main != null) { "Failed to get Main File!" }
+    require(rainbow != null) { "Failed to get Rainbow File!" }
+
+    return listOf(main to mainAdditional, rainbow to rainbowAdditional)
 }
 
 fun processColorDir(dir: File, packMeta: File) {

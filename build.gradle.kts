@@ -8,6 +8,7 @@ version = "1.5.0"
 
 repositories {
     mavenCentral()
+    maven("https://maven.firstdarkdev.xyz/releases")
 }
 
 dependencies {
@@ -15,6 +16,7 @@ dependencies {
     implementation("org.jetbrains.kotlinx:kotlinx-datetime:0.6.1")
 
     implementation("dev.masecla:Modrinth4J:2.2.0")
+    implementation("me.hypherionmc.modutils:CurseUpload4j:1.0.12")
 
 //    testImplementation(kotlin("test"))
 }

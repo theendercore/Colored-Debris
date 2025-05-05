@@ -7,6 +7,10 @@ import com.theendercore.utils.putFile
 import com.theendercore.utils.workInTempDir
 import kotlinx.serialization.encodeToString
 import kotlinx.serialization.json.Json
+import me.hypherionmc.curseupload.CurseUploadApi
+import me.hypherionmc.curseupload.constants.CurseChangelogType
+import me.hypherionmc.curseupload.constants.CurseReleaseType
+import me.hypherionmc.curseupload.requests.CurseArtifact
 import java.io.File
 import java.io.FileInputStream
 
@@ -21,6 +25,17 @@ val EXPORT = File("./expo")
 
 const val MAIN = "OriginalGreen"
 const val RAINBOW = "Rainbow"
+
+const val CHANGELOG = "- 1.21 update"
+val VERSIONS = setOf(
+    "1.20", "1.20.1", "1.20.2", "1.20.3", "1.20.4", "1.20.5", "1.20.6",
+    "1.21", "1.21.1", "1.21.2", "1.21.3", "1.21.4", "1.21.5", // "1.21.6"
+)
+const val CURSE_DEBUG = false
+
+// IDS
+const val CURSE_ID = 474155L
+const val MODRINTH_ID = "yIUjpHq1"
 
 // VARS
 var CURSE_KEY = ""
@@ -42,8 +57,24 @@ fun main() {
     }
     // Upload packs
     val sortedFiles = sortFiles()
+    postToPlatforms(sortedFiles)
+}
 
-
+fun postToPlatforms(sortedFiles: List<Pair<File, MutableSet<File>>>) {
+    val uploadApi = CurseUploadApi(CURSE_KEY)
+    uploadApi.isDebug = CURSE_DEBUG
+    var counter = 0
+    for ((main, additional) in sortedFiles) {
+        val ca = CurseArtifact(main, CURSE_ID)
+        ca.displayName(main.name.replace("-", " ").replace(".zip", ""))
+        ca.changelogType(CurseChangelogType.MARKDOWN)
+        ca.changelog(CHANGELOG)
+        if (counter != 0) ca.releaseType(CurseReleaseType.ALPHA)
+        for (ver in VERSIONS) ca.addGameVersion(ver)
+        for (add in additional) ca.addAdditionalFile(add)
+        uploadApi.upload(ca)
+        counter++
+    }
 }
 
 fun loadKeys() {

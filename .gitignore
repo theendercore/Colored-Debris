@@ -1,6 +1,6 @@
 ### PROJECT ###
-expo
-.info
+expo/
+temp/
 
 ### IntelliJ IDEA ###
 .idea/

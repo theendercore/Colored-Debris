@@ -20,16 +20,22 @@ val COLORS = File("colors")
 val EXPORT = File("./expo")
 
 val PACKS = mutableMapOf<String, File>()
-fun main() = workInTempDir { tempDir ->
-    // Create pack.mcmeta file
-    val packMeta = tempDir.resolve("pack.mcmeta")
-    packMeta.writeText(JSON.encodeToString(PACK_SETTINGS.pack()))
 
-    // Make sure export folder is empty
-    getOrCreateDir(EXPORT.path)
+fun main() {
+    // Makes packs
+    workInTempDir { tempDir ->
+        // Create pack.mcmeta file
+        val packMeta = tempDir.resolve("pack.mcmeta")
+        packMeta.writeText(JSON.encodeToString(PACK_SETTINGS.pack()))
 
-    COLORS.listFiles()?.forEach { processColorDir(it, packMeta) }
-    println(PACKS)
+        // Make sure export folder is empty
+        getOrCreateDir(EXPORT.path)
+
+        // creates packs
+        COLORS.listFiles()?.forEach { processColorDir(it, packMeta) }
+    }
+    // Upload packs
+
 }
 
 fun processColorDir(dir: File, packMeta: File) {

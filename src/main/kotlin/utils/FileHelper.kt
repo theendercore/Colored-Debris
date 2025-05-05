@@ -15,12 +15,14 @@ import kotlin.io.path.PathWalkOption
 import kotlin.io.path.walk
 
 const val TEMP_DIR = "./temp"
+const val DELETE_TEMP = true
 
 fun workInTempDir(fn: (tempDir: File) -> Unit) {
     val tempDir = File(TEMP_DIR)
     if (tempDir.exists()) tempDir.deleteRecursively()
     tempDir.mkdirs()
     fn(tempDir)
+    if (DELETE_TEMP) tempDir.deleteRecursively()
 }
 
 fun getOrCreateDir(path: String): File {

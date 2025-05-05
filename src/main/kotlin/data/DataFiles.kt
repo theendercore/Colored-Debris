@@ -8,6 +8,7 @@ data class PackFile(val pack: PackSettings)
 
 @Serializable
 data class PackSettings(
+    @SerialName("pack_format")
     val packFormat: Int,
     val description: String,
     @SerialName("supported_formats")

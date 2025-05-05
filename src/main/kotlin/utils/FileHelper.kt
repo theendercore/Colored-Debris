@@ -1,3 +1,5 @@
+@file:Suppress("unused")
+
 package com.theendercore.utils
 
 import java.io.BufferedOutputStream
@@ -56,6 +58,7 @@ fun Path.walkZip(vararg options: PathWalkOption): Pair<Path, Sequence<Path>> {
     return root to root.walk(*options)
 }
 
+fun File.createZipFile2(fn: (ZipOutputStream) -> Unit): Boolean = createZipFile(this, fn)
 fun createZipFile(outputPath: File, fn: (ZipOutputStream) -> Unit): Boolean {
     return try {
         ZipOutputStream(BufferedOutputStream(FileOutputStream(outputPath))).use(fn)

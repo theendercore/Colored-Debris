@@ -22,9 +22,12 @@ val EXPORT = File("./expo")
 const val MAIN = "OriginalGreen"
 const val RAINBOW = "Rainbow"
 
+// VARS
+var CURSE_KEY = ""
+var MODRINTH_KEY = ""
 val PACKS = mutableMapOf<String, File>()
-
 fun main() {
+    loadKeys()
     // Makes packs
     workInTempDir { tempDir ->
         // Create pack.mcmeta file
@@ -39,6 +42,24 @@ fun main() {
     }
     // Upload packs
     val sortedFiles = sortFiles()
+
+
+}
+
+fun loadKeys() {
+    val keys = File("./.env")
+    require(keys.exists()) { "\".env\" File doesn't exists!" }
+    require(keys.isFile) { "\".env\" is not a file!" }
+    keys.readLines().forEach {
+        val rawVar = it.split("=")
+        val pair = rawVar[0] to rawVar.drop(1).joinToString()
+        when (pair.first) {
+            "CURSE" -> CURSE_KEY = pair.second
+            "MODRINTH" -> MODRINTH_KEY = pair.second
+        }
+    }
+    require(CURSE_KEY.length > 5) { " Failed to load CURSE_KEY!" }
+    require(MODRINTH_KEY.length > 5) { " Failed to load MODRINTH_KEY!" }
 }
 
 fun sortFiles(): List<Pair<File, MutableSet<File>>> {
